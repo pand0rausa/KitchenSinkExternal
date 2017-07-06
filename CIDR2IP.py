@@ -1,7 +1,8 @@
 #!/usr/bin/python
 
 # Read CIDR ranges from file and expand IPs
-# IPs should be unique even if there are overlapping networks
+# IPs will duplicate if there are overlapping networks. 
+# Run "sort -u" on the output to remove dups.
 
 from iptools import IpRangeList
 
